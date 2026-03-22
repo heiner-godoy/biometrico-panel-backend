@@ -14,7 +14,8 @@ __pycache__/
 dist/
 build/
 .eggs/
-
+test_tablas.py
+test_db.py
 # Variables de entorno — NUNCA subir al repo
 .env
 .env.local
