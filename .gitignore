@@ -1,0 +1,71 @@
+# ========================
+# Python / FastAPI
+# ========================
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Variables de entorno — NUNCA subir al repo
+.env
+.env.local
+.env.production
+
+# Base de datos local SQLite (si se usa en pruebas)
+*.db
+*.sqlite3
+
+# Logs
+*.log
+logs/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MyPy
+.mypy_cache/
+
+# ========================
+# Angular / Node
+# ========================
+node_modules/
+dist/
+.angular/
+.cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de entorno Angular
+src/environments/environment.prod.ts
+
+# ========================
+# IDEs y editores
+# ========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# ========================
+# Sistema operativo
+# ========================
+.DS_Store
+Desktop.ini
+$RECYCLE.BIN/

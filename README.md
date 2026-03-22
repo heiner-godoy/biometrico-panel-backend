@@ -90,7 +90,7 @@ Este sistema permite administrar un dispositivo biométrico VTA-70075 completame
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tu-usuario/biometrico-panel.git
+git clone https://github.com/heiner-godoy/biometrico-panel.git
 cd biometrico-panel/backend
 ```
 
@@ -427,7 +427,7 @@ biometrico-panel/
 │
 ├── backend/
 │   ├── main.py                  ← Punto de entrada
-│   ├── database.py              ← Conexión PostgreSQL
+│   ├── connection.py              ← Conexión PostgreSQL
 │   ├── tcp_server.py            ← Receptor TCP del biométrico
 │   ├── websocket_manager.py     ← Broadcast tiempo real
 │   ├── requirements.txt
