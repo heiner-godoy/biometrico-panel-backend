@@ -26,6 +26,7 @@ def crear_tablas():
     Se llama una vez al arrancar main.py.
     Los modelos deben importarse aquí para que SQLAlchemy los conozca.
     """
+    import models.rol
     import models.empleado   # noqa — importar para que SQLAlchemy registre la tabla
     import models.registro   # noqa
     import models.usuario    # noqa
