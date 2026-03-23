@@ -1,1 +1,0 @@
-# biometrico-panel
