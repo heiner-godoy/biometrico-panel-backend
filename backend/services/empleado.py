@@ -26,8 +26,8 @@ class ServiceEmpleado:
         db.refresh(db_empleado)
         return db_empleado
     
-    def update_empleado(self, db: Session, bio_id: int, data: UpdateEmpleado):
-        empleado = self.get_empleado_by_id(db, bio_id)
+    def update_empleado(self, db: Session, data: UpdateEmpleado):
+        empleado = self.get_empleado_by_id(db, data.bio_id)
         if not empleado:
             return None
         for campo, valor in data.model_dump(exclude_unset=True).items():
