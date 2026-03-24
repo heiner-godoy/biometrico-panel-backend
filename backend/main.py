@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from routers.empleado import router_empleado 
-from routers.registro import router_registro
-from routers.rol import router_roles
-from routers.usuario import router_usuario
-from routers.auth import router_auth
+from routers.empleado import router as router_empleado
+from routers.registro import router as router_registro
+from routers.rol import router as router_roles
+from routers.usuario import router as router_usuario
+from routers.auth import router as router_auth
 
 
 

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from controllers.usuario_controller import (
+from controllers.usuario import (
     get_usuarios,
     get_usuarios_activos,
     get_usuario_by_id,

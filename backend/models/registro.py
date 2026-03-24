@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey, String
 from sqlalchemy.orm import relationship
 from  datetime import timezone, datetime
-from database import Base
+from test.database import Base
 
 class Registros(Base):
     __tablename__ = "registros"
@@ -15,4 +15,4 @@ class Registros(Base):
     motivo_bloqueo = Column(String(255), nullable= True )
     creado_en = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     
-    empleado = relationship("Empleado", back_populates="registros")
+    empleado = relationship("Empleados", back_populates="registros")

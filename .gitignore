@@ -16,6 +16,10 @@ build/
 .eggs/
 test_tablas.py
 test_db.py
+clave.py
+usuarioadmin.py
+test/
+
 # Variables de entorno — NUNCA subir al repo
 .env
 .env.local
@@ -70,3 +74,12 @@ Thumbs.db
 .DS_Store
 Desktop.ini
 $RECYCLE.BIN/
+
+# ========================
+# Docker
+# ========================
+docker-compose.override.yml
+*.dockerfile
+Dockerfile.local
+.docker/
+.tmp_docker/

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Boolean, DateTime, String
 from sqlalchemy.orm import relationship
 from  datetime import timezone, datetime
-from database import Base
+from test.database import Base
 
 class Empleados(Base):
     __tablename__ = "empleados"
@@ -19,5 +19,5 @@ class Empleados(Base):
     activo     = Column(Boolean, default=True, nullable=False)
     creado_en  = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    registros  = relationship("Registro", back_populates="empleado")
-    
+    registros  = relationship("Registros", back_populates="empleado")
+
