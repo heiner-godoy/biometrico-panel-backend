@@ -41,4 +41,4 @@ class ServiceRol:
         db.commit()
         return rol
 
-rol_service = ServiceRol()
+service_rol = ServiceRol()
