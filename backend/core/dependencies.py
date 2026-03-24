@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordBearer
 from core.security import verificar_token
-from test.database import SessionLocal
+from database import SessionLocal
 from models.usuario import Usuarios
 
 # Debe coincidir con tu router: /auth/login

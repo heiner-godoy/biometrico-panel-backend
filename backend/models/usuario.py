@@ -1,7 +1,7 @@
 from sqlalchemy import Column, DateTime, String, Integer, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import timezone, datetime
-from test.database import Base
+from database import Base
 from models.rol import Rol   # 👈 importa la clase Rol
 
 class Usuarios(Base):

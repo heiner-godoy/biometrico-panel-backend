@@ -2,18 +2,34 @@ from fastapi import HTTPException, status, Depends, Path, Query
 from sqlalchemy.orm import Session
 from core.dependencies import get_db, get_usuario_actual
 from models.usuario import Usuarios
+from models.registro import MetodoAcceso, TipoAcceso
 from services.registro import service_registro
 from schemas.registro import ResponseRegistro
 from typing import List, Optional
 
 
 def get_registros(
-    metodo: Optional[str] = Query(None, description="huella | rfid | huella_rfid"),
-    tipo: Optional[str]   = Query(None, description="entrada | salida"),
-    db: Session           = Depends(get_db),
-    usuario: Usuarios     = Depends(get_usuario_actual)
+    metodo:          Optional[MetodoAcceso] = Query(None, description="huella | rfid | password | huella_rfid | huella_password"),
+    tipo:            Optional[TipoAcceso]   = Query(None, description="entrada | salida"),
+    solo_bloqueados: Optional[bool]         = Query(None, description="Solo registros no autorizados"),
+    empleado_id:     Optional[str]          = Query(None, description="bio_id del empleado"),
+    fecha_desde:     Optional[str]          = Query(None, description="Fecha inicio YYYY-MM-DD"),
+    fecha_hasta:     Optional[str]          = Query(None, description="Fecha fin YYYY-MM-DD"),
+    limite:          int                    = Query(100, le=1000, description="Máximo de resultados"),
+    db: Session      = Depends(get_db),
+    usuario: Usuarios = Depends(get_usuario_actual)
 ):
-    return service_registro.get_registros(db)
+    # Ahora sí se pasan los filtros al servicio
+    return service_registro.get_registros(
+        db,
+        metodo=metodo,
+        tipo=tipo,
+        solo_bloqueados=solo_bloqueados,
+        empleado_id=empleado_id,
+        fecha_desde=fecha_desde,
+        fecha_hasta=fecha_hasta,
+        limite=limite,
+    )
 
 
 def get_registro_by_id(
@@ -49,3 +65,9 @@ def get_registros_bloqueados(
     usuario: Usuarios = Depends(get_usuario_actual)
 ):
     return service_registro.get_registros_bloqueados(db)
+
+def get_resumen_dia(
+    db: Session       = Depends(get_db),
+    usuario: Usuarios = Depends(get_usuario_actual)
+):
+    return service_registro.get_resumen_dia(db)

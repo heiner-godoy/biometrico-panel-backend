@@ -3,9 +3,10 @@ from controllers.registro import (
     get_registros,
     get_registro_by_id,
     get_registros_by_empleado,
-    get_registros_bloqueados
+    get_registros_bloqueados,
+    get_resumen_dia        # ← nuevo
 )
-from schemas.registro import ResponseRegistro
+from schemas.registro import ResponseRegistro, ResponseResumen  # ← nuevo
 from typing import List
 
 router = APIRouter(prefix="/registros", tags=["Registros"])
@@ -13,6 +14,11 @@ router = APIRouter(prefix="/registros", tags=["Registros"])
 
 @router.get("/", response_model=List[ResponseRegistro], status_code=200)
 def listar(resultado=Depends(get_registros)):
+    return resultado
+
+
+@router.get("/resumen", status_code=200)
+def resumen_dia(resultado=Depends(get_resumen_dia)):
     return resultado
 
 

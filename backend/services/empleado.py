@@ -25,9 +25,8 @@ class ServiceEmpleado:
         db.commit()
         db.refresh(db_empleado)
         return db_empleado
-    
-    def update_empleado(self, db: Session, data: UpdateEmpleado):
-        empleado = self.get_empleado_by_id(db, data.bio_id)
+    def update_empleado(self, db: Session, bio_id: str, data: UpdateEmpleado):
+        empleado = self.get_empleado_by_id(db, bio_id)  # ← usa el bio_id del Path
         if not empleado:
             return None
         for campo, valor in data.model_dump(exclude_unset=True).items():
@@ -35,7 +34,7 @@ class ServiceEmpleado:
         db.commit()
         db.refresh(empleado)
         return empleado
-
+    
     def delete_empleado(self, db: Session, bio_id: str):
         empleado = self.get_empleado_by_id(db, bio_id)
         if not empleado:
