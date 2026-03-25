@@ -1,302 +1,208 @@
-# biometrico-panel
-Este sistema permite administrar un dispositivo biométrico VTA-70075 completamente desde un panel web, sin necesidad de USB ni software propietario. El dispositivo se conecta por Ethernet a la red local y envía los registros de entrada/salida automáticamente al servidor mediante protocolo TCP.
+# Sistema Biométrico de Control de Acceso
 
-# Panel Biométrico VTA-70075
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-blue.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Sistema de control de acceso con biométrico, huellas dactilares y tarjetas RFID. Backend en FastAPI + PostgreSQL, frontend en Angular.
+Sistema completo de control de acceso biométrico que permite administrar el dispositivo VTA-70075 desde un panel web. Incluye gestión de empleados, registros en tiempo real, autenticación JWT y reportes avanzados.
+
+## ✨ Características Principales
+
+- 🔐 **Control Biométrico**: Integración completa con dispositivo VTA-70075 vía TCP/IP
+- 👥 **Gestión de Empleados**: CRUD completo con métodos de autenticación flexibles
+- ⚡ **Tiempo Real**: WebSockets para actualizaciones instantáneas de registros
+- 🔒 **Autenticación Segura**: JWT con roles (Admin/Visor) y permisos granulares
+- 📊 **Reportes Avanzados**: Estadísticas, exportación CSV y análisis de acceso
+- 🏗️ **Arquitectura Modular**: Backend FastAPI + PostgreSQL, fácilmente extensible
+- 🌐 **Acceso Remoto**: Compatible con VPN e IP pública
+- 📱 **Interfaz Web**: Panel administrativo completo (Angular)
+
+## 🚀 Inicio Rápido
+
+### Prerrequisitos
+- Python 3.8+
+- PostgreSQL 12+
+- Node.js 18+ (para frontend)
+- Dispositivo biométrico VTA-70075 en red LAN
+
+### Instalación
+
+1. **Clonar repositorio**
+   ```bash
+   git clone https://github.com/tu-usuario/biometrico-panel.git
+   cd biometrico-panel
+   ```
+
+2. **Backend - Configurar entorno**
+   ```bash
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # Linux/Mac
+   # o venv\Scripts\activate  # Windows
+   pip install -r requirements.txt
+   ```
+
+3. **Configurar base de datos**
+   ```sql
+   CREATE DATABASE biometrico_db;
+   CREATE USER biometrico_user WITH PASSWORD 'secure_password';
+   GRANT ALL PRIVILEGES ON DATABASE biometrico_db TO biometrico_user;
+   ```
+
+4. **Variables de entorno**
+   ```bash
+   cp .env.example .env
+   # Editar .env con credenciales de BD y JWT_SECRET
+   ```
+
+5. **Ejecutar aplicación**
+   ```bash
+   python main.py
+   ```
+
+6. **Acceder al sistema**
+   - API Docs: http://localhost:8000/docs
+   - Usuario admin inicial: `admin` / `123456`
+
+### Configuración del Dispositivo Biométrico
+
+1. Acceder al menú de red del dispositivo VTA-70075
+2. Configurar:
+   - **Server IP**: IP del servidor en la red LAN
+   - **Server Port**: `7005`
+   - **ETH**: Habilitado
+
+## 📁 Estructura del Proyecto
+
+```
+biometrico-panel/
+├── backend/                  # Servidor FastAPI
+│   ├── main.py              # Punto de entrada
+│   ├── database.py          # Configuración BD
+│   ├── tcp_server.py       # Comunicación con biométrico
+│   ├── core/                # Configuraciones centrales
+│   ├── models/              # Entidades SQLAlchemy
+│   ├── schemas/             # Validación Pydantic
+│   ├── routers/             # Endpoints REST
+│   ├── controllers/         # Lógica de negocio
+│   └── services/            # Servicios de aplicación
+├── docs/                    # Documentación completa
+├── test/                    # Pruebas del sistema
+└── README.md               # Este archivo
+```
+
+## 🔧 Tecnologías
+
+- **Backend**: FastAPI, SQLAlchemy, PostgreSQL
+- **Autenticación**: JWT (JSON Web Tokens)
+- **Tiempo Real**: WebSockets
+- **Comunicación**: TCP/IP con dispositivo biométrico
+- **Documentación**: OpenAPI/Swagger
+- **Testing**: Pytest
+
+## 📚 Documentación
+
+Para información detallada, consulta la documentación completa:
+
+- **[📖 Documentación Completa](docs/index.md)** - Guía técnica detallada
+- **[🏗️ Arquitectura](docs/architecture.md)** - Diseño del sistema
+- **[🗄️ Base de Datos](docs/database.md)** - Esquema y modelos
+- **[🔌 API Reference](docs/api/endpoints.md)** - Endpoints y ejemplos
+- **[🚀 Despliegue](docs/deployment.md)** - Guías de instalación
+
+## 🔐 Autenticación y Roles
+
+### Roles del Sistema
+- **Admin**: Control total del sistema
+  - Gestión de empleados y usuarios
+  - Configuración del sistema
+  - Reportes completos
+
+- **Visor**: Acceso de solo lectura
+  - Visualización de registros
+  - Reportes básicos
+  - Estadísticas
+
+### Seguridad
+- Autenticación JWT con expiración configurable
+- Contraseñas encriptadas con bcrypt
+- Validación de entrada con Pydantic
+- CORS configurado para orígenes específicos
+
+## 🌟 Funcionalidades
+
+### Gestión de Empleados
+- Registro completo con datos personales
+- Configuración de métodos de acceso (huella, RFID, contraseña)
+- Control granular de permisos por empleado
+- Estados activo/inactivo
+
+### Registros de Acceso
+- Captura automática desde dispositivo biométrico
+- Registros manuales para casos especiales
+- Filtros avanzados por fecha, empleado, método
+- Exportación a CSV
+
+### Reportes y Estadísticas
+- Conteos por método de acceso
+- Distribuciones horarias y diarias
+- Alertas de accesos no autorizados
+- Exportación de datos
+
+### Comunicación en Tiempo Real
+- WebSockets para actualizaciones instantáneas
+- Notificaciones de nuevos registros
+- Actualización automática del dashboard
+
+## 🚀 Despliegue en Producción
+
+### Opción Recomendada: Docker
+```bash
+docker-compose up -d
+```
+
+### Opciones Avanzadas
+- **Systemd**: Servicio Linux nativo
+- **Nginx + Gunicorn**: Servidor web con proxy reverso
+- **Docker**: Contenedorizado para escalabilidad
+
+Ver **[Guía de Despliegue](docs/deployment.md)** para instrucciones detalladas.
+
+## 🧪 Testing
+
+```bash
+cd backend
+pytest test/
+```
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crear rama para feature (`git checkout -b feature/AmazingFeature`)
+3. Commit cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para más detalles.
+
+## 📞 Soporte
+
+- **📧 Email**: soporte@tu-empresa.com
+- **📚 Docs**: [Documentación Completa](docs/)
+- **🐛 Issues**: [GitHub Issues](https://github.com/tu-usuario/biometrico-panel/issues)
+
+## 🙏 Agradecimientos
+
+- FastAPI por el excelente framework
+- SQLAlchemy por el ORM robusto
+- Comunidad open source
 
 ---
 
-## Tabla de contenidos
-
-- [Descripción general](#descripción-general)
-- [Arquitectura](#arquitectura)
-- [Requisitos](#requisitos)
-- [Instalación del backend](#instalación-del-backend)
-- [Instalación del frontend](#instalación-del-frontend)
-- [Configuración del biométrico](#configuración-del-biométrico)
-- [Variables de entorno](#variables-de-entorno)
-- [Endpoints de la API](#endpoints-de-la-api)
-- [WebSocket tiempo real](#websocket-tiempo-real)
-- [Roles y permisos](#roles-y-permisos)
-- [Acceso remoto](#acceso-remoto)
-- [Estructura del proyecto](#estructura-del-proyecto)
-
----
-
-## Descripción general
-
-Este sistema permite administrar un dispositivo biométrico VTA-70075 completamente desde un panel web, sin necesidad de USB ni software propietario. El dispositivo se conecta por Ethernet a la red local y envía los registros de entrada/salida automáticamente al servidor mediante protocolo TCP.
-
-**Funcionalidades principales:**
-
-- Registros de entrada y salida en tiempo real vía WebSocket
-- Soporte para huella dactilar y tarjeta RFID por empleado
-- Restricción de métodos de acceso por empleado (bloquear huella o RFID individualmente)
-- Alertas automáticas de accesos bloqueados
-- Gestión completa de empleados (CRUD)
-- Exportación de reportes en CSV
-- Estadísticas por método, hora y día
-- Autenticación con JWT y roles (admin / visor)
-- Acceso remoto vía VPN o IP pública
-
----
-
-## Arquitectura
-
-```
-[Biométrico VTA-70075]
-        |
-        | TCP puerto 7005 (red LAN)
-        |
-[PC Servidor local]
-        |
-        ├── tcp_server.py        → recibe datos del biométrico
-        ├── FastAPI (puerto 8000) → API REST + WebSocket
-        ├── PostgreSQL (puerto 5432) → base de datos
-        |
-        | HTTP / WebSocket
-        |
-[Navegador — Angular]
-        |
-        ├── /login
-        ├── /registros   → tiempo real
-        ├── /empleados   → CRUD
-        ├── /alertas     → accesos bloqueados
-        └── /reportes    → exportar CSV / estadísticas
-```
-
----
-
-## Requisitos
-
-### Backend
-- Python 3.11 o superior
-- PostgreSQL 14 o superior
-
-### Frontend
-- Node.js 18 o superior
-- Angular CLI 17 o superior
-
-### Red
-- Biométrico y servidor en la misma red LAN
-- Puerto 7005 abierto en el firewall local (TCP entrante)
-- Puerto 8000 abierto para el panel web
-
----
-
-## Instalación del backend
-
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/heiner-godoy/biometrico-panel.git
-cd biometrico-panel/backend
-```
-
-### 2. Crear entorno virtual
-
-```bash
-# Windows
-python -m venv venv
-venv\Scripts\activate
-
-# Linux / Mac
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Instalar dependencias
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Crear la base de datos en PostgreSQL
-
-Abre pgAdmin o la consola `psql` y ejecuta:
-
-```sql
-CREATE DATABASE biometrico;
-CREATE USER admin_bio WITH PASSWORD 'tu_password_seguro';
-GRANT ALL PRIVILEGES ON DATABASE biometrico TO admin_bio;
-```
-
-### 5. Configurar variables de entorno
-
-```bash
-# Windows
-copy .env.example .env
-
-# Linux / Mac
-cp .env.example .env
-```
-
-Edita el archivo `.env` con tus credenciales. Ver sección [Variables de entorno](#variables-de-entorno).
-
-### 6. Arrancar el servidor
-
-```bash
-python main.py
-```
-
-El servidor crea las tablas automáticamente en el primer arranque y genera un usuario administrador inicial:
-
-```
-usuario: admin
-contraseña: admin123
-```
-
-> ⚠️ Cambia esta contraseña inmediatamente desde el panel antes de usar en producción.
-
-### 7. Verificar que funciona
-
-Abre en el navegador:
-
-```
-http://localhost:8000/docs
-```
-
-Verás la documentación interactiva de todos los endpoints (Swagger UI).
-
----
-
-## Instalación del frontend
-
-### 1. Instalar Angular CLI
-
-```bash
-npm install -g @angular/cli
-```
-
-### 2. Entrar a la carpeta del frontend
-
-```bash
-cd biometrico-panel/frontend
-```
-
-### 3. Instalar dependencias
-
-```bash
-npm install
-```
-
-### 4. Configurar la URL del backend
-
-Edita `src/environments/environment.ts`:
-
-```typescript
-export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8000/api',
-  wsUrl:  'ws://localhost:8000/api/registros/ws',
-};
-```
-
-### 5. Arrancar en desarrollo
-
-```bash
-ng serve
-```
-
-Abre en el navegador:
-
-```
-http://localhost:4200
-```
-
-### 6. Compilar para producción
-
-```bash
-ng build --configuration production
-```
-
-Los archivos compilados quedan en `dist/`. Se pueden servir con cualquier servidor web (Nginx, Apache) o directamente desde FastAPI con `StaticFiles`.
-
----
-
-## Configuración del biométrico
-
-En la pantalla del dispositivo VTA-70075, entra a:
-
-```
-Menú → Red
-```
-
-Configura los siguientes campos:
-
-| Campo | Valor |
-|-------|-------|
-| ETH | Si |
-| Server IP | IP de tu PC en la red local (ver abajo) |
-| Server Port | 7005 |
-| Server Req | No |
-
-Para saber la IP de tu PC en Windows:
-
-```bash
-ipconfig
-# Busca "Dirección IPv4" → ej: 192.168.1.100
-```
-
-> El puerto 5005 (No.Port) es el puerto en que escucha el biométrico. El Server Port (7005) es al que el dispositivo envía los datos — ese es el que debe coincidir con el backend.
-
----
-
-## Variables de entorno
-
-Copia `.env.example` a `.env` y completa los valores:
-
-```env
-# Base de datos PostgreSQL
-DATABASE_URL=postgresql://admin_bio:tu_password@localhost:5432/biometrico
-
-# JWT — usa un string largo y aleatorio, nunca compartas este valor
-JWT_SECRET=reemplaza_esto_con_un_string_muy_largo_y_aleatorio
-JWT_ALGORITHM=HS256
-JWT_EXPIRE_MINUTES=480
-
-# Servidor TCP que escucha al biométrico
-TCP_HOST=0.0.0.0
-TCP_PORT=7005
-
-# FastAPI
-API_HOST=0.0.0.0
-API_PORT=8000
-
-# CORS — agrega la URL de Angular (separadas por coma si hay varias)
-CORS_ORIGINS=http://localhost:4200,http://192.168.1.100:4200
-```
-
-Para generar un JWT_SECRET seguro:
-
-```bash
-python -c "import secrets; print(secrets.token_hex(32))"
-```
-
----
-
-## Endpoints de la API
-
-### Autenticación
-
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | Login → retorna JWT |
-| GET | `/api/auth/me` | Perfil del usuario actual |
-| POST | `/api/auth/usuarios` | Crear usuario (solo admin) |
-
-### Registros
-
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
-| GET | `/api/registros` | Listar registros con filtros |
-| GET | `/api/registros/resumen` | Totales del día por método |
-| WS | `/api/registros/ws` | WebSocket — tiempo real |
-
-Parámetros de filtro disponibles en `GET /api/registros`:
-
-| Parámetro | Tipo | Ejemplo |
+*Desarrollado con ❤️ para soluciones de control de acceso biométrico*
 |-----------|------|---------|
 | `metodo` | string | `huella`, `rfid`, `huella_rfid` |
 | `tipo` | string | `entrada`, `salida` |
@@ -427,7 +333,7 @@ biometrico-panel/
 │
 ├── backend/
 │   ├── main.py                  ← Punto de entrada
-│   ├── connection.py              ← Conexión PostgreSQL
+│   ├── database.py              ← Conexión PostgreSQL
 │   ├── tcp_server.py            ← Receptor TCP del biométrico
 │   ├── websocket_manager.py     ← Broadcast tiempo real
 │   ├── requirements.txt

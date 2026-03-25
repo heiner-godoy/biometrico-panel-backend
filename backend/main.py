@@ -17,13 +17,15 @@ async def lifespan(app: FastAPI):
     crear_tablas()
     print("✅ Base de datos lista")
 
-    # Arranca el servidor TCP junto con FastAPI
-    tcp_task = asyncio.create_task(start_tcp_server())
-    print("✅ Servidor TCP escuchando en puerto 7005")
+    async def iniciar_tcp():
+        await asyncio.sleep(1)  # ← espera a que FastAPI levante primero
+        await start_tcp_server()
+
+    tcp_task = asyncio.create_task(iniciar_tcp())
+    print("✅ Servidor TCP iniciando...")
 
     yield
 
-    # Al apagar, cancela el TCP limpiamente
     tcp_task.cancel()
     try:
         await tcp_task
@@ -31,12 +33,17 @@ async def lifespan(app: FastAPI):
         pass
     print("🛑 Servidor detenido")
 
-
 app = FastAPI(
-    title="API Biométrico",
+    title="Sistema Biométrico de Control de Acceso",
+    description="API REST para gestionar registros de asistencia mediante dispositivos biométricos.",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    contact={
+        "name": "Heiner",
+        "email": "tu_correo@ejemplo.com",
+    },
 )
+
 
 app.add_middleware(
     CORSMiddleware,

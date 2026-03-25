@@ -2,12 +2,12 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from core.dependencies import get_db, get_usuario_actual
-from core.security import verify_password, crear_token
+from core.security import verify_password_async, crear_token
 from models.usuario import Usuarios
 from schemas.usuario import ResponseUser
 
 
-def login(
+async def login(
     form: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
@@ -21,7 +21,8 @@ def login(
             detail="Usuario no encontrado"
         )
 
-    if not verify_password(form.password, usuario.password):
+    # ← await para no bloquear
+    if not await verify_password_async(form.password, usuario.password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Contraseña incorrecta"
@@ -47,7 +48,5 @@ def login(
     }
 
 
-def me(
-    usuario: Usuarios = Depends(get_usuario_actual)
-) -> ResponseUser:
+def me(usuario: Usuarios = Depends(get_usuario_actual)) -> ResponseUser:
     return usuario

@@ -8,6 +8,7 @@ from schemas.registro import ResponseRegistro
 from typing import List, Optional
 
 
+
 def get_registros(
     metodo:          Optional[MetodoAcceso] = Query(None, description="huella | rfid | password | huella_rfid | huella_password"),
     tipo:            Optional[TipoAcceso]   = Query(None, description="entrada | salida"),
