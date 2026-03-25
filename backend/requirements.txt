@@ -20,8 +20,8 @@ Jinja2==3.1.6
 markdown-it-py==4.0.0
 MarkupSafe==3.0.3
 mdurl==0.1.2
-passlib[bcrypt]==1.7.4
-bcrypt==4.1.2
+passlib[argon2]==1.7.4
+bcrypt==4.0.1
 psycopg2-binary==2.9.11
 pydantic==2.12.5
 pydantic-extra-types==2.11.0
@@ -29,6 +29,7 @@ pydantic-settings==2.13.1
 pydantic_core==2.41.5
 python-decouple==3.8
 python-dotenv==1.2.2
+python-jose[cryptography]==3.3.0
 python-multipart==0.0.22
 PyYAML==6.0.3
 rich==14.3.3

@@ -5,8 +5,8 @@ from core.security import verificar_token
 from database import SessionLocal
 from models.usuario import Usuarios
 
-# Debe coincidir con tu router: /auth/login
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+# Debe coincidir con tu router: /api/auth/login
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 # Dependencia para obtener la sesión de BD
 def get_db():

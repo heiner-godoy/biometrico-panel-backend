@@ -75,7 +75,12 @@ async def handle_client(reader, writer):
         writer.close()
 
 async def start_tcp_server():
-    server = await asyncio.start_server(handle_client, HOST, PORT)
-    print(f"[TCP] 🟢 Escuchando en {HOST}:{PORT}")
-    async with server:
-        await server.serve_forever()
+    try:
+        server = await asyncio.start_server(handle_client, HOST, PORT)
+        print(f"[TCP] 🟢 Escuchando en {HOST}:{PORT}")
+        async with server:
+            await server.serve_forever()
+    except OSError as e:
+        print(f"[TCP] ❌ No se pudo iniciar el servidor TCP: {e}")
+    except asyncio.CancelledError:
+        print("[TCP] 🛑 Servidor TCP detenido")

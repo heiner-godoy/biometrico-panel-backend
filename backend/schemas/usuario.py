@@ -26,7 +26,7 @@ class ResponseUser(BaseModel):
     username : str
     email : str
     activo : bool
-    creado_en : datetime
+    creado_en : Optional[datetime]
     ultimo_login : Optional[datetime]
     
 class UpdateUser(BaseModel):
